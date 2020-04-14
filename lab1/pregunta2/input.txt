@@ -1,0 +1,12 @@
+Ancho del pulso cuadrado: (valor numerico)
+5
+Valor T: (valor numerico)
+6*pi
+Valor Ts: (valor numerico)
+0.1
+Valor Wc: (valor numerico)
+1
+valor Wc 1: (valor numerico)
+1
+Valor Wc 2: (valor numerico)
+4
