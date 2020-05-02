@@ -1,15 +1,39 @@
-function y = encoding(formato,valor_polo,y_niveles_binario)
-% DESCRIPCIÓN: genera onda de pulso y segun formato de señalizacion y si es unipolar (0) o bipolar(-1).
-% ENTRADAS: - formato = formato de señalizacion(NRZ, RZ, Manchester).
-%           - valor_polo = valor representativo del numero de polos (0 = unipolar, -1 = bipolar).
-%           - y_niveles_binario = señal binaria codificada a representar.
+function [t,y] = encoding(bits, bitrate, polos, tipo)
+% DESCRIPCIÓN: genera onda de pulso y segun formato de señalizacion NRZ(1) o RZ(2) o manchester(3), y si es unipolar (1) o bipolar(2).
+% ENTRADAS: - bits = señal binaria codificada a representar.
+%           - bitrate = frecuencia de reloj
+%           - polos = valor representativo del numero de polos (1 = unipolar, 2 = bipolar).
+%           - tipo = formato de señalizacion(NRZ(1), RZ(2), Manchester(3)).
 % SALIDAS:  - y = forma de onda de pulso.
-  y = [];
-	for i=1:length(y_niveles_binario)
-	  if (y_niveles_binario(i)==1)
-	    y=[y  formato];
-    elseif (y_niveles_binario(i)==0)
-	    y=[y  (valor_polo*formato)];        
-	  end
-	end
+
+T = length(bits)/bitrate;
+n = 200;
+N = n*length(bits);
+dt = T/N;
+t = 0:dt:T;
+y = zeros(1,length(t));
+for i = 0:length(bits)-1
+  if bits(i+1) == 1
+    if (tipo==1)#NRZ
+      y(i*n+1:(i+1)*n) = 1;
+    elseif (tipo==2)#RZ
+      y(i*n+1:(i+0.5)*n) = 1;
+      y((i+0.5)*n+1:(i+1)*n) = 0;
+    elseif (tipo==3)#manchester
+      x(i*n+1:(i+0.5)*n) = 1;
+      x((i+0.5)*n+1:(i+1)*n) = -1;
+    end
+  else
+    if (tipo==3)#manchester
+      x(i*n+1:(i+0.5)*n) = -1;
+      x((i+0.5)*n+1:(i+1)*n) = 1;
+    elseif (polos==1)#NRZ-RZ unipolar
+      y(i*n+1:(i+1)*n) = 0;
+    elseif (polos==2&&tipo==1)#NRZ bipolar
+      y(i*n+1:(i+1)*n) = -1;
+    elseif (polos==2&&tipo==2)#RZ bipolar
+      y(i*n+1:(i+0.5)*n) = -1;
+      y((i+0.5)*n+1:(i+1)*n) = 0;
+    end
+  end
 end
