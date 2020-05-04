@@ -10,8 +10,8 @@ function y = pcm(xq,n,a)
   z= [-a:k:a];
     
 	for i=1:length(xq)
-	  n=xq(i);
-    [val,idx]=min(abs(xq-n));
+	  j=xq(i);
+    [val,idx]=min(abs(xq-j));
     minVal=dec2bin(idx-1,n);
     temp=[temp minVal];
 	end

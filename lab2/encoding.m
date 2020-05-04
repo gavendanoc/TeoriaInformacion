@@ -23,7 +23,7 @@ for i = 0:length(bits)-1
       y(i*n+1:(i+0.5)*n) = 1;
       y((i+0.5)*n+1:(i+1)*n) = -1;
     end
-  else
+  else#0
     if (tipo==3)#manchester
       y(i*n+1:(i+0.5)*n) = -1;
       y((i+0.5)*n+1:(i+1)*n) = 1;

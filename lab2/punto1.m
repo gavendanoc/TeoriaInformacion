@@ -2,7 +2,7 @@
 ok = false;
 while (~ok)
   try
-    fun = input("Ingrese la funcion f(t)= ","s");
+    fun = input("Ingrese la funcion m(t)= ","s");
     m = inline(fun,'t');#crea la funcion
     ok = true;
   catch
@@ -51,20 +51,13 @@ x=m(t_s); #señal a ser cuantizada
 a=max(max(x),abs(min(x))); #amplitud maximo de la señal
 xq=cuantUniforme(x,a,n); #señal cuantizada
 
-subplot(3,1,3);stem(t_s,xq,'k'); title('m(t) cuantizada');xlabel('nT_s'); ylabel('x(nT_s)');
+subplot(3,1,3);stem(t_s,xq,'k'); title('m(t) cuantizada');xlabel('nT_s'); ylabel('x(nT_s)'); grid;
 
 %------c. CODIFICACION--------
 
 x_pcm=pcm(xq,n,a);
 
 %-------d. REPRESENTACION DEL PULSO-------------------------------
-y1=[];
-y2=[];
-y3=[];
-y4=[];
-y5=[];
-y6=[];
-
 bitrate=1;
 unipolar=1;
 bipolar=2;
@@ -76,7 +69,7 @@ manchester=3;
 [t_wave,bipolarNRZ]=encoding(x_pcm,bitrate,bipolar,NRZ);
 [t_wave,unipolarRZ]=encoding(x_pcm,bitrate,unipolar,RZ);
 [t_wave,bipolarRZ]=encoding(x_pcm,bitrate,bipolar,RZ);
-#[t_wave,AMIRZ]=encoding(x_pcm,bitrate,unipolar,NRZ);
+#[t_wave,AMIRZ]=amirz(x_pcm,bitrate,unipolar,NRZ);
 [t_wave,w_manchester]=encoding(x_pcm,bitrate,unipolar,manchester);
 
 figure(2);
