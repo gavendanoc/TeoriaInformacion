@@ -20,13 +20,13 @@ for i = 0:length(bits)-1
       y(i*n+1:(i+0.5)*n) = 1;
       y((i+0.5)*n+1:(i+1)*n) = 0;
     elseif (tipo==3)#manchester
-      x(i*n+1:(i+0.5)*n) = 1;
-      x((i+0.5)*n+1:(i+1)*n) = -1;
+      y(i*n+1:(i+0.5)*n) = 1;
+      y((i+0.5)*n+1:(i+1)*n) = -1;
     end
   else
     if (tipo==3)#manchester
-      x(i*n+1:(i+0.5)*n) = -1;
-      x((i+0.5)*n+1:(i+1)*n) = 1;
+      y(i*n+1:(i+0.5)*n) = -1;
+      y((i+0.5)*n+1:(i+1)*n) = 1;
     elseif (polos==1)#NRZ-RZ unipolar
       y(i*n+1:(i+1)*n) = 0;
     elseif (polos==2&&tipo==1)#NRZ bipolar
