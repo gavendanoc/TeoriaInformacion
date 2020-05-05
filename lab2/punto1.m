@@ -35,15 +35,15 @@ end
 
 %-----a. MUESTREO-----------
 
-p=2; #numeros de veces de muestreo
+p=2; #nyquist rate
 f_m=1/T_m; #Frecuencia original
 t=[0:0.02:p*T_m]; #Arreglo visualizacion funcion original
 f_s=p/T_m; #Frecuencia de muestreo
 t_s=[0:f_s:p*T_m]; #Arreglo de periodo de muestreo
 
 figure(1);
-subplot(3,1,1),plot(t,m(t),'k'); title('m(t) original'); grid;
-subplot(3,1,2),stem(t_s,m(t_s),'k'); title('m(t) muestreada'); grid;
+subplot(3,1,1),plot(t,m(t),'k'); title('m(t) original'); grid;xlabel('t'); ylabel('m(t)');
+subplot(3,1,2),stem(t_s,m(t_s),'k'); title('m(t) muestreada'); grid;xlabel('nT_s'); ylabel('m(nT_s)');
 
 %------b. CUANTIZACION-------
 
@@ -51,11 +51,11 @@ x=m(t_s); #señal a ser cuantizada
 a=max(max(x),abs(min(x))); #amplitud maximo de la señal
 xq=cuantUniforme(x,a,n); #señal cuantizada
 
-subplot(3,1,3);stem(t_s,xq,'k'); title('m(t) cuantizada');xlabel('nT_s'); ylabel('x(nT_s)'); grid;
+subplot(3,1,3);stem(t_s,xq,'k'); title('m(t) cuantizada');xlabel('nT_s'); ylabel('m(nT_s)'); grid;
 
 %------c. CODIFICACION--------
 
-x_pcm=pcm(xq,n,a);
+x_pcm=pcm(xq,n);
 
 %-------d. REPRESENTACION DEL PULSO-------------------------------
 bitrate=1;
@@ -74,17 +74,17 @@ amiRZ=4;
 [t_wave,w_manchester]=encoding(x_pcm,bitrate,unipolar,manchester);
 
 figure(2);
-plot(t_wave, unipolarNRZ,'k'); ylim([-1.1 1.1]); title('Señal codificada unipolar NRZ');xlabel('nT_s'); ylabel('x(nT_s)');
+plot(t_wave, unipolarNRZ,'k'); ylim([-1.1 1.1]); title('Señal codificada unipolar NRZ');xlabel('t'); ylabel('voltaje(t)');
 figure(3);
-plot(t_wave, bipolarNRZ,'k'); ylim([-1.1 1.1]); title('Señal codificada bipolar NRZ');xlabel('nT_s'); ylabel('x(nT_s)');
+plot(t_wave, bipolarNRZ,'k'); ylim([-1.1 1.1]); title('Señal codificada bipolar NRZ');xlabel('t'); ylabel('voltaje(t)');
 figure(4);
-plot(t_wave, unipolarRZ,'k'); ylim([-1.1 1.1]); title('Señal codificada unipolar RZ');xlabel('nT_s'); ylabel('x(nT_s)');
+plot(t_wave, unipolarRZ,'k'); ylim([-1.1 1.1]); title('Señal codificada unipolar RZ');xlabel('t'); ylabel('voltaje(t)');
 figure(5);
-plot(t_wave, bipolarRZ,'k'); ylim([-1.1 1.1]); title('Señal codificada Bipolar RZ');xlabel('nT_s'); ylabel('x(nT_s)');
+plot(t_wave, bipolarRZ,'k'); ylim([-1.1 1.1]); title('Señal codificada Bipolar RZ');xlabel('t'); ylabel('voltaje(t)');
 figure(6);
-plot(t_wave, AMIRZ,'k'); ylim([-1.1 1.1]); title('Señal codificada AMIRZ');xlabel('nT_s'); ylabel('x(nT_s)');
+plot(t_wave, AMIRZ,'k'); ylim([-1.1 1.1]); title('Señal codificada AMIRZ');xlabel('t'); ylabel('voltaje(t)');
 figure(7);
-plot(t_wave, w_manchester,'k'); ylim([-1.1 1.1]); title('Señal codificada Manchester');xlabel('nT_s'); ylabel('x(nT_s)');
+plot(t_wave, w_manchester,'k'); ylim([-1.1 1.1]); title('Señal codificada Manchester');xlabel('t'); ylabel('voltaje(t)');
 
 %-------e. RECUPERAR M(T)---------
 
@@ -95,5 +95,5 @@ for i=t_s
   sum=sum+fun;
 endfor
 figure(8);
-plot(t,sum); title('Señal m(t) recuperada');
+plot(t,sum); title('Señal m(t) recuperada');xlabel('t'); ylabel('m(t)');
 
