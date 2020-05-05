@@ -6,13 +6,11 @@ function y = pcm(xq,n,a)
 % SALIDAS:  - y = señal binaria de codigo pcm.
   y = [];
   temp=[];
-  k=(2*a)/2^n;
-  z= [-a:k:a];
-    
+  z= sort(unique(xq));
 	for i=1:length(xq)
 	  j=xq(i);
-    [val,idx]=min(abs(xq-j));
-    minVal=dec2bin(idx-1,n);
+    [val,idx]=min(abs(z-j));
+    minVal=dec2bin((idx-1),n);
     temp=[temp minVal];
 	end
   for i=1:length(temp)

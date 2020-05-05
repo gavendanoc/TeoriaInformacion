@@ -35,11 +35,11 @@ end
 
 %-----a. MUESTREO-----------
 
+p=2; #numeros de veces de muestreo
 f_m=1/T_m; #Frecuencia original
-t=[0:0.02:2*T_m]; #Arreglo visualizacion funcion original
-f_s=2*f_m; #Frecuencia de muestreo
-t_s=[0:f_s:2*T_m]; #Arreglo de periodo de muestreo
-#t_s=[0:1/f_s:2*T_m]; #Arreglo de periodo de muestreo
+t=[0:0.02:p*T_m]; #Arreglo visualizacion funcion original
+f_s=p/T_m; #Frecuencia de muestreo
+t_s=[0:f_s:p*T_m]; #Arreglo de periodo de muestreo
 
 figure(1);
 subplot(3,1,1),plot(t,m(t),'k'); title('m(t) original'); grid;
@@ -64,30 +64,36 @@ bipolar=2;
 NRZ=1;
 RZ=2;
 manchester=3;
+amiRZ=4;
 
 [t_wave,unipolarNRZ]=encoding(x_pcm,bitrate,unipolar,NRZ);
 [t_wave,bipolarNRZ]=encoding(x_pcm,bitrate,bipolar,NRZ);
 [t_wave,unipolarRZ]=encoding(x_pcm,bitrate,unipolar,RZ);
 [t_wave,bipolarRZ]=encoding(x_pcm,bitrate,bipolar,RZ);
-#[t_wave,AMIRZ]=amirz(x_pcm,bitrate,unipolar,NRZ);
+[t_wave,AMIRZ]=encoding(x_pcm,bitrate,unipolar,amiRZ);
 [t_wave,w_manchester]=encoding(x_pcm,bitrate,unipolar,manchester);
 
 figure(2);
-subplot(1,1,1);plot(t_wave, unipolarNRZ,'k'); ylim([-1.1 1.1]); title('Señal codificada unipolar NRZ');xlabel('nT_s'); ylabel('x(nT_s)');
+plot(t_wave, unipolarNRZ,'k'); ylim([-1.1 1.1]); title('Señal codificada unipolar NRZ');xlabel('nT_s'); ylabel('x(nT_s)');
 figure(3);
-subplot(1,1,1);plot(t_wave, bipolarNRZ,'k'); ylim([-1.1 1.1]); title('Señal codificada bipolar NRZ');xlabel('nT_s'); ylabel('x(nT_s)');
+plot(t_wave, bipolarNRZ,'k'); ylim([-1.1 1.1]); title('Señal codificada bipolar NRZ');xlabel('nT_s'); ylabel('x(nT_s)');
 figure(4);
-subplot(1,1,1);plot(t_wave, unipolarRZ,'k'); ylim([-1.1 1.1]); title('Señal codificada unipolar RZ');xlabel('nT_s'); ylabel('x(nT_s)');
+plot(t_wave, unipolarRZ,'k'); ylim([-1.1 1.1]); title('Señal codificada unipolar RZ');xlabel('nT_s'); ylabel('x(nT_s)');
 figure(5);
-subplot(1,1,1);plot(t_wave, bipolarRZ,'k'); ylim([-1.1 1.1]); title('Señal codificada Bipolar RZ');xlabel('nT_s'); ylabel('x(nT_s)');
-#figure(6);
-#subplot(1,1,2);plot(t_wave, AMIRZ,'k'); ylim([-1.1 1.1]); title('Señal codificada AMIRZ');xlabel('nT_s'); ylabel('x(nT_s)');
+plot(t_wave, bipolarRZ,'k'); ylim([-1.1 1.1]); title('Señal codificada Bipolar RZ');xlabel('nT_s'); ylabel('x(nT_s)');
+figure(6);
+plot(t_wave, AMIRZ,'k'); ylim([-1.1 1.1]); title('Señal codificada AMIRZ');xlabel('nT_s'); ylabel('x(nT_s)');
 figure(7);
-subplot(1,1,1);plot(t_wave, w_manchester,'k'); ylim([-1.1 1.1]); title('Señal codificada Manchester');xlabel('nT_s'); ylabel('x(nT_s)');
+plot(t_wave, w_manchester,'k'); ylim([-1.1 1.1]); title('Señal codificada Manchester');xlabel('nT_s'); ylabel('x(nT_s)');
 
 %-------e. RECUPERAR M(T)---------
 
-##x_recovered
-##figure(4);
-##plot(t_s,x_recovered); title('Recuperacion de la señal');
+sum=0;
+w_m=2*pi*f_m;
+for i=t_s 
+  fun=m(i*(1/f_s))*sinc((t-(i*(1/f_s)))/(1/f_s)); # Whittaker–Shannon interpolation formula
+  sum=sum+fun;
+endfor
+figure(8);
+plot(t,sum); title('Señal m(t) recuperada');
 
