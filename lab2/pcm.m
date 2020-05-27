@@ -1,7 +1,6 @@
-function y = pcm(xq,n,a)
-% DESCRIPCIÓN: retorna señal binaria de codigo pcm para señal cuantizada xq segun a amplitud maxima y n numeros de bits de cuantizacion
+function y = pcm(xq,n)
+% DESCRIPCIÓN: retorna señal binaria de codigo pcm para señal cuantizada xq y n numeros de bits de cuantizacion
 % ENTRADAS: - xq = señal cuantizada.
-%           - a = amplitud maxima de la señal.
 %           - n = numeros de bits de cuantizacion.
 % SALIDAS:  - y = señal binaria de codigo pcm.
   y = [];
