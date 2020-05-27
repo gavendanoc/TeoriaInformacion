@@ -1,19 +1,50 @@
 tests
 
-square(t)
-2*pi
-5
-
 ---
 
 0.5*sin(2*pi/2*t)+1.4*cos(2*pi/2*t)
 2
 6
 
+----
+
+
+square(t)
+2*pi
+2
+
+---
+
+square(t)
+2*pi
+5
+
+----
+
+square(t)
+2*pi
+50
+
+---
+---
 ---
 
 sawtooth(t)
 2*pi
-5
+2
+
+
+-------
+
+
+sawtooth(t)
+2*pi
+10
+
+--------
+
+sawtooth(t)
+2*pi
+20
 
 
