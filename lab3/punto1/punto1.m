@@ -1,6 +1,6 @@
 clear;
 clc;
-
+pkg load image;
 
 # ingresar simbolo entrada m
 ok = false;
@@ -41,11 +41,11 @@ while (~ok)
   try
     s = input("Ingrese vector probabilida [P(X)]: ","s");
     
-    v_p = cellfun("str2num",strsplit(s," "));
+    p_x = cellfun("str2num",strsplit(s," "));
     
-    if (length(v_p) != m)
+    if (length(p_x) != m)
       printf("Son %d variables, vuelvelo a intentar\n\n", m);
-    elseif (sum(v_p) != 1)
+    elseif (sum(p_x) != 1)
       printf("Las probabilidades no suman 1, volver a intentar\n\n", m);
     else
       ok = true;  
@@ -58,7 +58,7 @@ endwhile
 
 # Ingresar matriz probabilidad
 printf("\n\nIngresar la matrix de probabilidad [P(Y|X)]\n\n", m);
-M_p=[];
+P_y_x=[];
 for i=1: m
   ok = false;
   while (~ok)
@@ -78,13 +78,40 @@ for i=1: m
       printf("Error al ingresar esa fila, vuelvelo a intentar\n\n");
     end_try_catch
   endwhile
-  M_p = [M_p;s];
+  P_y_x = [P_y_x;s];
 endfor
 
-M_p
-v_p
 
+% calcular [P(Y)] 
 
+p_y = p_x * P_y_x;
+p_y
+
+% calcular[P(X,Y)]
+
+diag(p_x)
+
+P_x_y = diag(p_x) * P_y_x;
+P_x_y
+
+% calcular H(X) 
+
+e_x = entropy(p_x);
+e_x
+
+% calcular H(Y|X) 
+
+% calcular H(Y)
+
+e_y = entropy(p_y);
+e_y
+
+% calcular H(X,Y) 
+
+e_x_y = entropy (P_x_y);
+e_x_y
+
+% calcular I(X;Y).
 
 
 
