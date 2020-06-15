@@ -4,29 +4,51 @@ clear;
 
 pkg load communications
 
+# Ingresar  matriz de datos
+ok = false;
+while (~ok)
+  try
+    D = input("Ingrese matriz de datos D : ");
+    
+    [m k] = size(D);
+    
+    if (k != 3)
+      printf("El tamaño del mensaje debe ser 3 en bloques (6,3)\n\n");
+    elseif (sum(D(:) == 1 | D(:) == 0) != m*k)
+      printf("La matriz debe ser binaria \n\n");
+    else
+      ok = true;  
+    endif
+  catch
+    printf("Hubo un error al ingresar esa fila, vuelvelo a intentar\n\n");
+  end_try_catch
+endwhile
+
+
+# Ingresar vector o matriz de errores
+ok = false;
+while (~ok)
+  try
+    e = input("Ingrese vector o matriz de errores e : ");
+    
+    [r n] = size(e);
+    
+    if (n != 6 || ((r != 1) & (r != m)))
+      printf("El tamaño del mensaje debe ser (1, 6) o (%d, 6)\n\n", m);
+    elseif (sum(e(:) == 1 | e(:) == 0) != r*n)
+      printf("La matriz debe ser binaria \n\n");
+    else
+      ok = true;  
+    endif
+  catch
+    printf("Hubo un error al ingresar esa fila, vuelvelo a intentar\n\n");
+  end_try_catch
+endwhile
+
+% matriz de paridad definida en el laboratorio 
 P = [1 0 1; 
      1 1 1;
      1 1 0];
-     
-     
-D = [0 1 0;
-    0 0 1;
-    0 1 1;
-    0 1 1;
-    1 0 0; 
-    1 0 1;
-    1 1 1;
-    1 1 1];
-
-e = [ 0 0 0 0 0 0;  
-      0 1 0 0 0 0;  
-      0 0 1 0 0 0;  
-      0 0 0 1 0 0;  
-      0 0 0 0 1 0;  
-      0 0 0 0 0 1;  
-      0 0 0 0 1 0;  
-      0 0 0 1 0 0;];
-
 
 C = encoder(P, D);
 R = dmc(C, e);
@@ -46,6 +68,16 @@ printf("\n------------------------ \n\n");
 % imprimir P
 printf(" Matriz de paridad P : \n");
 disp(P);
+
+printf("\n------------------------ \n");
+printf("---- CODIFICADOR ------- \n");
+printf("------------------------ \n\n");
+
+printf("\n------------------------ \n\n");
+
+% imprimir e
+printf(" Matriz de errores e : \n");
+disp(e);
 
 printf("\n------------------------ \n");
 printf("---- CODIFICADOR ------- \n");
