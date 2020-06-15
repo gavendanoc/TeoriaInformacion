@@ -2,7 +2,13 @@
 clc;
 clear;
 
-pkg load communications
+pkg load communications;
+
+
+% matriz de paridad definida en el laboratorio 
+P = [1 0 1; 
+     1 1 1;
+     1 1 0];
 
 # Ingresar  matriz de datos
 ok = false;
@@ -45,10 +51,6 @@ while (~ok)
   end_try_catch
 endwhile
 
-% matriz de paridad definida en el laboratorio 
-P = [1 0 1; 
-     1 1 1;
-     1 1 0];
 
 C = encoder(P, D);
 R = dmc(C, e);
@@ -68,10 +70,6 @@ printf("\n------------------------ \n\n");
 % imprimir P
 printf(" Matriz de paridad P : \n");
 disp(P);
-
-printf("\n------------------------ \n");
-printf("---- CODIFICADOR ------- \n");
-printf("------------------------ \n\n");
 
 printf("\n------------------------ \n\n");
 
