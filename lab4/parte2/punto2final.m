@@ -1,7 +1,7 @@
 clc
 clear
 
-bits_recibidos_izq_a_der=[ 11 01 00 01 11 ];
+bits_recibidos_izq_a_der=[ 01 10 11 00 00 ];
 
 ## diagrama
 ## estados segun tiempo
@@ -63,16 +63,16 @@ distancias = [0 0 0 0];
 ##t1 a t2
 ##caso 00
 if bits_recibidos_izq_a_der( 1 ) == 0
-  distancias( 1 ) = 0;
-  distancias( 2 ) = 2;
+  distancias( 1 ) = 0;##00
+  distancias( 2 ) = 2;##11
 ##caso 11
 elseif bits_recibidos_izq_a_der( 1 ) == 11
-  distancias( 1 ) = 2;
-  distancias( 2 ) = 0;
+  distancias( 1 ) = 2;##00
+  distancias( 2 ) = 0;##11
 ##caso 01 10
 else
-  distancias( 1 ) = 1;
-  distancias( 2 ) = 1;
+  distancias( 1 ) = 1;##00
+  distancias( 2 ) = 1;##11
 endif
 
 ##t2 a t3
@@ -83,28 +83,28 @@ nodos3 = [1,3,6];
 nodos4 = [1,3,7];
 ##caso 11
 if bits_recibidos_izq_a_der( 2 ) == 11
-  distancias( 1 ) = prev_distancias( 1 ) + 2;
-  distancias( 2 ) = prev_distancias( 1 ) + 0;
-  distancias( 3 ) = prev_distancias( 2 ) + 1;
-  distancias( 4 ) = prev_distancias( 2 ) + 1;
+  distancias( 1 ) = prev_distancias( 1 ) + 2;##00
+  distancias( 2 ) = prev_distancias( 1 ) + 0;##11
+  distancias( 3 ) = prev_distancias( 2 ) + 1;##10
+  distancias( 4 ) = prev_distancias( 2 ) + 1;##01
 ##caso 10  
 elseif bits_recibidos_izq_a_der( 2 ) == 10
-  distancias( 1 ) = prev_distancias( 1 ) + 1;
-  distancias( 2 ) = prev_distancias( 1 ) + 1;
-  distancias( 3 ) = prev_distancias( 2 ) + 2;
-  distancias( 4 ) = prev_distancias( 2 ) + 0;
+  distancias( 1 ) = prev_distancias( 1 ) + 1;##00
+  distancias( 2 ) = prev_distancias( 1 ) + 1;##11
+  distancias( 3 ) = prev_distancias( 2 ) + 0;##10
+  distancias( 4 ) = prev_distancias( 2 ) + 2;##01
 ##caso 01  
 elseif bits_recibidos_izq_a_der( 2 ) == 1
-  distancias( 1 ) = prev_distancias( 1 ) + 1;
-  distancias( 2 ) = prev_distancias( 1 ) + 1;
-  distancias( 3 ) = prev_distancias( 2 ) + 0;
-  distancias( 4 ) = prev_distancias( 2 ) + 2;
+  distancias( 1 ) = prev_distancias( 1 ) + 1;##00
+  distancias( 2 ) = prev_distancias( 1 ) + 1;##11
+  distancias( 3 ) = prev_distancias( 2 ) + 2;##10
+  distancias( 4 ) = prev_distancias( 2 ) + 0;##01
 ##caso 00  
 else
-  distancias( 1 ) = prev_distancias( 1 ) + 0;
-  distancias( 2 ) = prev_distancias( 1 ) + 2;
-  distancias( 3 ) = prev_distancias( 2 ) + 1;
-  distancias( 4 ) = prev_distancias( 2 ) + 1;
+  distancias( 1 ) = prev_distancias( 1 ) + 0;##00
+  distancias( 2 ) = prev_distancias( 1 ) + 2;##11
+  distancias( 3 ) = prev_distancias( 2 ) + 1;##10
+  distancias( 4 ) = prev_distancias( 2 ) + 1;##01
 endif
 
 for l=3:5 ##misma logica para t3 a t4 a t5 a t6
